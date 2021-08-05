@@ -1,0 +1,21 @@
+{
+  "name": "image_encryption",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Toyosi Oyelayo",
+  "license": "MIT",
+  "dependencies": {
+    "b64": "^4.1.2",
+    "crypto": "^1.0.1",
+    "fs2": "^0.3.9",
+    "nodemon": "^2.0.9",
+    "stream-to": "^2.0.0",
+    "stream-to-array": "^2.3.0",
+    "stream-to-buffer": "^0.1.0",
+    "uuid": "^8.3.2"
+  }
+}

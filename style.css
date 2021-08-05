@@ -1,0 +1,47 @@
+* {
+    font-family:Arial, Helvetica, sans-serif;
+}
+body{
+    margin: 0;
+    padding: 0
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f1f1f1;
+    padding-top: 90px;
+}
+
+.row{
+    width: 60vw;
+    height: 60vh;
+    background-color: #fff;
+    margin: 0 auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 40px
+}
+
+div.images{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+div.buttons{
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.encrypt, .decrypt{
+    width: 200px;
+    height: 200px;
+    background-color: #000000;
+}
+
+.encrypt-button{
+    width: 100px;
+}
