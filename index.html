@@ -5,25 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Encryption Algorithms</title>
-    <link type="text/css" href="style.css" rel="stylesheet" />
+    <link type="text/css" href="assets/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="assets/style.css" rel="stylesheet" />
+    <script src="assets/jquery.js"></script>
+    <script src="assets/popper.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/bootbox.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <h2>IMAGE ENCRYPTION</h2>
-
-        <div class="images">
-          <div class="encrypt"></div>
-          <div class="decrypt"></div>
-        </div>
-
-        <div class="buttons">
-          <select>
-            --Choose an encryption algorithm--
-          </select>
-          <button type="button" class="enctrypt-button">Encrypt</button>
-        </div>
-      </div>
+    <div class="wrapper">
+        <button class="_btn encrypt" id="encrypt">ENCRYPT</button>
+        <button class="_btn decrypt">DECRYPT</button>
     </div>
+    <script>
+      const encryptDialogContent = `
+        <div>
+
+        </div>
+      `;
+      $(document).on("click", "#encrypt", function(e) {
+            bootbox.dialog({
+              title: '',
+              message: '<h1>Hello</h1>',
+              size: 'large',
+              onEscape: true,
+              backdrop: true,
+              buttons: {
+                upload: {
+                  label: 'Upload',
+                  className: 'btn',
+                  callback: function(){
+                    $('#hello').html('heeee');
+                    alert('here')
+                  }
+                },
+                encrypt: {
+                  label: 'Encrypt',
+                  className: 'btn',
+                  callback: function(){
+                    alert('hhh')
+                  }
+                }
+              }
+            });
+        });
+    </script>
   </body>
 </html>
