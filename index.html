@@ -15,18 +15,91 @@
   <body>
     <div class="wrapper">
         <button class="_btn encrypt" id="encrypt">ENCRYPT</button>
-        <button class="_btn decrypt">DECRYPT</button>
+        <button class="_btn decrypt" id="decrypt">DECRYPT</button>
+
     </div>
     <script>
       const encryptDialogContent = `
-        <div>
+        <div id="image_container" style="height: 70vh; overflow: scroll">
+          <select class="form-control">
+            <option>--Select Encryption Algorithm--</option>
+            <option value="aes-256-ctr">AES</option>
+            <option value="des-ecb">DES</option>
+            <option value="bf-cbc">Blowfish</option>
 
+          </select>
+          <input type="text" class="form-control" placeholder="Input Encryption Key" />
+          <img id="preview_image" />
+          <input type="file" style="display:none" id="file_upload" onchange="previewImage(event, 'enc')" />
         </div>
       `;
+
+      const decryptDialogContent = `
+        <div id="image_container" style="height: 70vh; overflow: scroll">
+          <select class="form-control">
+            <option>--Select Encryption Algorithm--</option>
+            <option>AES</option>
+          </select>
+          <input type="text" class="form-control" placeholder="Input Encryption Key" />
+
+          <p id="loading"></p>
+          <img id="preview_image" />
+          <input type="file" style="display:none" id="file_upload" onchange="previewImage(event, 'dec')" />
+        </div>
+      `;
+
+      function previewImage(event, process){
+          var reader = new FileReader();
+          reader.onload = function(){
+            let output;
+            output = document.getElementById('preview_image');
+            if(process === 'enc'){
+              output.src = reader.result;
+            }else if(process === 'dec'){
+              output.src = 'assets/encrypted_placeholder.jpg';
+            }
+          }
+          reader.readAsDataURL(event.target.files[0]);
+          $('.form-control').css('display', 'block');
+      }
+
+      function encryptDecrypt(process){
+        let formData = new FormData();
+        let files = $('#file_upload')[0].files;
+
+        if(files.length > 0){
+          (process === 'enc') ? 
+          formData.append('to_be_encrypted', files[0]): 
+          formData.append('to_be_decrypted', files[0]);
+
+          $.ajax({
+            url: (process === 'enc') ? '/encrypt' : '/decrypt',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response){
+              if(process === 'dec'){
+                $('#loading').show();
+                $('#loading').html("Decrypting...please wait...");
+                
+                setTimeout(function(){
+                  $('#loading').hide();
+                  $('#preview_image').attr('src', 'data:image/jpeg;base64, ' + response.data);
+
+                }, 2000)
+                
+              }
+            }
+          })
+        }
+      }
+
+
       $(document).on("click", "#encrypt", function(e) {
             bootbox.dialog({
               title: '',
-              message: '<h1>Hello</h1>',
+              message: encryptDialogContent,
               size: 'large',
               onEscape: true,
               backdrop: true,
@@ -35,19 +108,51 @@
                   label: 'Upload',
                   className: 'btn',
                   callback: function(){
-                    $('#hello').html('heeee');
-                    alert('here')
+                    $('#file_upload').click();
+                    return false
                   }
                 },
                 encrypt: {
                   label: 'Encrypt',
                   className: 'btn',
-                  callback: function(){
-                    alert('hhh')
+                  callback: async function(e){
+                    await encryptDecrypt('enc');
+                    bootbox.alert('Image encrypted successfully')
+                    return false;
                   }
                 }
               }
             });
+
+        });
+
+        $(document).on("click", "#decrypt", function(e) {
+            bootbox.dialog({
+              title: '',
+              message: decryptDialogContent,
+              size: 'large',
+              onEscape: true,
+              backdrop: true,
+              buttons: {
+                upload: {
+                  label: 'Upload',
+                  className: 'btn',
+                  callback: function(){
+                    $('#file_upload').click();
+                    return false
+                  }
+                },
+                encrypt: {
+                  label: 'Decrypt',
+                  className: 'btn',
+                  callback: function(e){
+                    encryptDecrypt('dec');
+                    return false;
+                  }
+                }
+              }
+            });
+
         });
     </script>
   </body>

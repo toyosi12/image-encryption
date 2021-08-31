@@ -1,16 +1,18 @@
-let fs = require('fs');
-let crypt = require('crypto'),
-        algorithm = 'aes-256-ctr',
-        password = 'secret';
-let stream = fs.createReadStream('./encFiles/IMG_0843');
+const decrypt = async (fileName) => {
+    let fs = require('fs');
+    let crypt = require('crypto'),
+            algorithm = 'aes-256-ctr',
+            password = 'secret';
+    let stream = fs.createReadStream('encFiles/' + fileName);
+    
+    let decrypt = crypt.createDecipher(algorithm, password);
+    let toArray = require('stream-to-array');   
+    
+    stream = stream.pipe(decrypt);
+    const buffer = Buffer.concat(await toArray(stream));
+    const data = Buffer.from(buffer).toString('base64');
+    return {success: true, data: data};
 
-let decrypt = crypt.createDecipher(algorithm, password);
-let toArray = require('stream-to-array');
+}
 
-stream = stream.pipe(decrypt);
-let data;
-toArray(stream, function(err, arr){
-    data = Buffer.concat(arr);
-    data = Buffer.from(data).toString('base64');
-    console.log('data: ', data);
-})
+module.exports.decrypt = decrypt;

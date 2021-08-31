@@ -10,9 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "b64": "^4.1.2",
-    "bootbox": "^5.5.2",
     "crypto": "^1.0.1",
+    "express": "^4.17.1",
     "fs2": "^0.3.9",
+    "multer": "^1.4.2",
     "nodemon": "^2.0.9",
     "stream-to": "^2.0.0",
     "stream-to-array": "^2.3.0",

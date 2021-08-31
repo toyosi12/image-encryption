@@ -46,3 +46,21 @@ body{
     transition: 0.5s;
 
 }
+
+.form-control{
+    width: 50%;
+    margin-bottom: 5px;
+    display: none;
+}
+
+#image_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#preview_image{
+    width: 500px;
+    height: auto;
+}
